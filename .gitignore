@@ -19,6 +19,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.pypirc
 
 # Virtual environments
 venv/
@@ -28,6 +29,7 @@ venv/
 htmlcov/
 .tox/
 .pytest_cache/
+examples_advanced/
 
 # OS specific
 .DS_Store

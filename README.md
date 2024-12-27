@@ -15,6 +15,11 @@ pip install mosaicmap
 - Simple and intuitive API
 - Customizable output size, background color, and labels
 
+## Example Ouptut
+This example shows cities sized by time spent:
+
+![Example Output](resources/example_output.jpg)
+
 ## Usage
 
 ```python

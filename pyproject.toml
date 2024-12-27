@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mosaicmap"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     { name="Eric Langenberg", email="eric-langenberg@users.noreply.github.com" },
 ]
@@ -25,5 +25,5 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/eric-langenberg/mosaicmap"
+"Homepage" = "https://github.com/eric-langenberg/mosaic-map"
 "Bug Tracker" = "https://github.com/eric-langenberg/mosaicmap/issues"
