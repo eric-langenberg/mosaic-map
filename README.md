@@ -1,6 +1,6 @@
 # MosaicMap
 
-A Python library for creating treemaps where rectangles are replaced with images. Perfect for visualizing data with visual representations.
+A Python library for creating treemaps where rectangles are replaced with images. Perfect for visualizing comparisons and part-to-whole relationships with striking visuals.
 
 ## Installation
 
