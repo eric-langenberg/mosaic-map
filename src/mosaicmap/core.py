@@ -1,10 +1,9 @@
 # src/mosaicmap/core.py
-import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 import squarify
-import pandas as pd
 from pathlib import Path
 from typing import Dict, List, Union, Literal
+
 
 class MosaicMap:
     """
@@ -13,7 +12,16 @@ class MosaicMap:
     
     def __init__(self):
         self.supported_modes = ['crop', 'stretch']
-    
+        self.bundled_font = Path(__file__).parent.parent.parent / "resources" / "DejaVuSans.ttf"
+
+
+    def _get_font(self, font_size: int = 12) -> ImageFont.ImageFont:
+            try:
+                return ImageFont.truetype(str(self.bundled_font), font_size)
+            except Exception:
+                print("Bundled font not available. Using default font.")
+                return ImageFont.load_default()
+            
     def _validate_inputs(self, data: Dict) -> None:
         """Validate input data structure and contents."""
         required_keys = ['labels', 'values', 'image_paths']
@@ -64,22 +72,24 @@ class MosaicMap:
         text_bbox = draw.textbbox((0, 0), label, font=font)
         text_width = text_bbox[2] - text_bbox[0]
         text_height = text_bbox[3] - text_bbox[1]
+
+        ascent, descent = font.getmetrics()
         
         # Calculate position (centered horizontally, near top vertically)
-        x = rect['x'] + (rect['dx'] - text_width) / 2
-        y = rect['y'] + 10  # 10 pixels from top
+        x = int(rect['x'] + (rect['dx'] - text_width) / 2)
+        y = int(rect['y']) + 5  # 5 pixels from top
         
         # Create padding around text
-        padding = 4
+        padding = 2
         bg_bbox = (
             x - padding,
-            y - padding,
-            x + text_width + padding,
-            y + text_height + padding
+            y + descent - padding - 1,
+            x + text_width + padding-1,
+            y + text_height + descent + padding
         )
         
         # Draw semi-transparent black background
-        draw.rectangle(bg_bbox, fill=(0, 0, 0, 128))  # 128 is 50% opacity
+        draw.rectangle(bg_bbox, fill=(0, 0, 0, 102))  # 102 is 40% opacity
         
         return (x, y)
     
@@ -123,9 +133,9 @@ class MosaicMap:
             overlay_draw = ImageDraw.Draw(label_overlay)
             # Try to load a system font, fall back to default if not found
             try:
-                font = ImageFont.truetype("arial.ttf", font_size)
+                 font = self._get_font(font_size)
             except OSError:
-                font = ImageFont.load_default()
+                font = ImageFont.load_default()  # Use default font without size adjustment
         
         # Process each rectangle
         for rect, img_path, label in zip(rects, data['image_paths'], data['labels']):
