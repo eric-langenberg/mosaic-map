@@ -13,4 +13,4 @@ data = {
 
 # Create mosaic map
 mosaic = MosaicMap()
-mosaic.create(data, 'test_output.jpg', show_labels=True)
+mosaic.create(data, 'examples/test_output.jpg', show_labels=True, font_size=20)
